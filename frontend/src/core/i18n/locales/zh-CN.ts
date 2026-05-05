@@ -220,13 +220,6 @@ export const zhCN: Translations = {
 
   // Workspace
   workspace: {
-    officialWebsite: "访问 Aether 靈境 官方网站",
-    githubTooltip: "访问 Aether 靈境 的 Github 仓库",
-    settingsAndMore: "设置和更多",
-    visitGithub: "在 Github 上查看 Aether 靈境",
-    reportIssue: "报告问题",
-    contactUs: "联系我们",
-    about: "关于 Aether 靈境",
     logout: "退出登录",
   },
 
@@ -341,7 +334,6 @@ export const zhCN: Translations = {
       tools: "工具",
       skills: "技能",
       notification: "通知",
-      about: "关于",
     },
     memory: {
       title: "记忆",

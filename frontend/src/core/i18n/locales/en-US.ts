@@ -232,13 +232,6 @@ export const enUS: Translations = {
 
   // Workspace
   workspace: {
-    officialWebsite: "Aether's official website",
-    githubTooltip: "Aether on Github",
-    settingsAndMore: "Settings and more",
-    visitGithub: "Aether on GitHub",
-    reportIssue: "Report a issue",
-    contactUs: "Contact us",
-    about: "About Aether",
     logout: "Log out",
   },
 
@@ -357,7 +350,6 @@ export const enUS: Translations = {
       tools: "Tools",
       skills: "Skills",
       notification: "Notification",
-      about: "About",
     },
     memory: {
       title: "Memory",
