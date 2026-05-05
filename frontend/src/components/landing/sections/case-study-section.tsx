@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 import { Card } from "@/components/ui/card";
 import { pathOfThread } from "@/core/threads/utils";
@@ -49,7 +49,7 @@ export function CaseStudySection({ className }: { className?: string }) {
     <Section
       className={className}
       title="Case Studies"
-      subtitle="See how DeerFlow is used in the wild"
+      subtitle="See how Aether 靈境 is used in the wild"
     >
       <div className="container-md mt-8 grid grid-cols-1 gap-4 px-4 md:grid-cols-2 md:px-20 lg:grid-cols-3">
         {caseStudies.map((caseStudy) => (
@@ -97,3 +97,4 @@ export function CaseStudySection({ className }: { className?: string }) {
     </Section>
   );
 }
+

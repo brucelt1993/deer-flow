@@ -1,4 +1,4 @@
----
+﻿---
 title: 沙箱
 description: 沙箱为 Lead Agent 提供一个受控环境，在其中可以读取文件、写入输出、运行 Shell 命令并生成产出物。没有沙箱，Agent 只能生成文本；有了沙箱，它可以编写和执行代码、处理数据文件、生成图表并构建交付物。
 ---
@@ -8,7 +8,7 @@ import { Callout, Cards, Tabs } from "nextra/components";
 # 沙箱
 
 <Callout type="info" emoji="📦">
-  沙箱是 Agent 进行文件和命令操作的隔离工作区。它让 DeerFlow
+  沙箱是 Agent 进行文件和命令操作的隔离工作区。它让 Aether 靈境
   能够采取真实行动，而不仅仅是对话。
 </Callout>
 
@@ -16,7 +16,7 @@ import { Callout, Cards, Tabs } from "nextra/components";
 
 ## 沙箱模式
 
-DeerFlow 支持三种沙箱模式，选择适合你部署的一种：
+Aether 靈境 支持三种沙箱模式，选择适合你部署的一种：
 
 ### LocalSandbox（默认）
 
@@ -57,7 +57,7 @@ sandbox:
       read_only: false
 ```
 
-安装：`cd backend && uv add 'deerflow-harness[aio-sandbox]'`
+安装：`cd backend && uv add 'Aether 靈境-harness[aio-sandbox]'`
 
 ### Provisioner 管理的沙箱（Kubernetes）
 
@@ -144,3 +144,5 @@ sandbox:
   <Cards.Card title="工具" href="/docs/harness/tools" />
   <Cards.Card title="子 Agent" href="/docs/harness/subagents" />
 </Cards>
+
+

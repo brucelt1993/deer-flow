@@ -132,7 +132,7 @@ export default function LoginPage() {
   return (
     <div className="bg-background flex min-h-screen items-center justify-center">
       <FlickeringGrid
-        className="absolute inset-0 z-0 mask-[url(/images/deer.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
+        className="absolute inset-0 z-0 mask-[url(/images/aether-mark.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
         squareSize={4}
         gridGap={4}
         color={actualTheme === "dark" ? "white" : "black"}
@@ -141,9 +141,9 @@ export default function LoginPage() {
       />
       <div className="border-border/20 bg-background/5 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-sm">
         <div className="text-center">
-          <h1 className="text-foreground font-serif text-3xl">DeerFlow</h1>
+          <h1 className="text-foreground font-serif text-3xl">Aether 靈境</h1>
           <p className="text-muted-foreground mt-2">
-            {isLogin ? "Sign in to your account" : "Create a new account"}
+            {isLogin ? "Sign in to Aether" : "Create an Aether account"}
           </p>
         </div>
 
@@ -204,7 +204,7 @@ export default function LoginPage() {
 
         <div className="text-muted-foreground text-center text-xs">
           <Link href="/" className="hover:underline">
-            ← Back to home
+            ← Back to Aether
           </Link>
         </div>
       </div>

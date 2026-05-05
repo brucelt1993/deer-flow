@@ -1,4 +1,4 @@
----
+﻿---
 title: 技能
 description: 技能不仅仅是提示词。它是一个自包含的能力包，可以包含结构化指令、分步工作流、领域最佳实践、支撑资源和工具配置。技能按需加载——在任务需要时注入内容，否则不影响上下文。
 ---
@@ -38,7 +38,7 @@ import { Callout, Cards, FileTree, Steps } from "nextra/components";
 
 ## 内置技能
 
-DeerFlow 内置以下公共技能：
+Aether 靈境 内置以下公共技能：
 
 | 技能                           | 描述                                         |
 | ------------------------------ | -------------------------------------------- |
@@ -105,7 +105,7 @@ skills:
 
 技能可用性在 `extensions_config.json` 中跟踪（独立于 `config.yaml`）。你可以管理技能状态：
 
-- **通过 DeerFlow 应用界面**：技能面板允许你切换技能的启用/禁用状态。
+- **通过 Aether 靈境 应用界面**：技能面板允许你切换技能的启用/禁用状态。
 - **通过 Gateway API**：`POST /api/extensions/skills/{name}/enable` 和 `/disable`。
 - **直接编辑 `extensions_config.json`**。
 
@@ -129,7 +129,7 @@ skills:
 
 ## 技能进化
 
-DeerFlow 包含一个可选的**技能进化**功能，允许 Agent 在 `skills/custom/` 目录中自主创建和改进技能：
+Aether 靈境 包含一个可选的**技能进化**功能，允许 Agent 在 `skills/custom/` 目录中自主创建和改进技能：
 
 ```yaml
 skill_evolution:
@@ -157,3 +157,4 @@ skill_evolution:
   <Cards.Card title="沙箱" href="/docs/harness/sandbox" />
   <Cards.Card title="工具" href="/docs/harness/tools" />
 </Cards>
+

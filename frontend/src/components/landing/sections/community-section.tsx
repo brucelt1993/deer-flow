@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
@@ -16,7 +16,7 @@ export function CommunitySection() {
           Join the Community
         </AuroraText>
       }
-      subtitle="Contribute brilliant ideas to shape the future of DeerFlow. Collaborate, innovate, and make impacts."
+      subtitle="Contribute brilliant ideas to shape the future of Aether 靈境. Collaborate, innovate, and make impacts."
     >
       <div className="flex justify-center">
         <Button className="text-xl" size="lg" asChild>
@@ -33,3 +33,4 @@ export function CommunitySection() {
     </Section>
   );
 }
+

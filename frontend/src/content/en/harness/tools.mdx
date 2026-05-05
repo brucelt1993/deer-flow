@@ -1,4 +1,4 @@
----
+﻿---
 title: Tools
 description: "The Lead Agent is a tool-calling agent. Tools are how it interacts with the world: searching the web, reading and writing files, running commands, delegating tasks, and presenting outputs to the user."
 ---
@@ -8,14 +8,14 @@ import { Callout, Cards, Tabs } from "nextra/components";
 # Tools
 
 <Callout type="info" emoji="🔧">
-  Tools are the actions the Lead Agent can take. DeerFlow provides built-in
+  Tools are the actions the Lead Agent can take. Aether provides built-in
   tools, community integrations, MCP tools, and skill tools — all controlled
   through <code>config.yaml</code>.
 </Callout>
 
 The Lead Agent is a tool-calling agent. Tools are how it interacts with the world: searching the web, reading and writing files, running commands, delegating tasks, and presenting outputs to the user.
 
-DeerFlow organizes tools into four categories:
+Aether organizes tools into four categories:
 
 1. **Built-in tools** — core runtime capabilities always available to the agent
 2. **Community tools** — integrations with external search, fetch, and image services
@@ -123,7 +123,7 @@ tools:
 ```
 High-quality search with structured results. Requires a [Tavily](https://tavily.com) API key.
 
-Install: `cd backend && uv add 'deerflow-harness[tavily]'`
+Install: `cd backend && uv add 'Aether-harness[tavily]'`
 
   </Tabs.Tab>
   <Tabs.Tab>
@@ -134,7 +134,7 @@ tools:
 ```
 Semantic search with neural retrieval. Requires an [Exa](https://exa.ai) API key.
 
-Install: `cd backend && uv add 'deerflow-harness[exa]'`
+Install: `cd backend && uv add 'Aether-harness[exa]'`
 
   </Tabs.Tab>
   <Tabs.Tab>
@@ -153,7 +153,7 @@ tools:
 ```
 Firecrawl-powered search and crawl. Requires a [Firecrawl](https://firecrawl.dev) API key.
 
-Install: `cd backend && uv add 'deerflow-harness[firecrawl]'`
+Install: `cd backend && uv add 'Aether-harness[firecrawl]'`
 
   </Tabs.Tab>
 </Tabs>
@@ -243,3 +243,5 @@ This is particularly useful when MCP servers expose dozens of tools.
   <Cards.Card title="MCP Integration" href="/docs/harness/mcp" />
   <Cards.Card title="Skills" href="/docs/harness/skills" />
 </Cards>
+
+

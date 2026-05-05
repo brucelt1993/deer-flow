@@ -1,8 +1,8 @@
 import type { MetaRecord } from "nextra";
 
 const meta: MetaRecord = {
-  "why-deerflow": {
-    title: "为什么选择 DeerFlow",
+  "why-aether": {
+    title: "为什么选择 Aether 靈境",
   },
   "core-concepts": {
     title: "核心概念",

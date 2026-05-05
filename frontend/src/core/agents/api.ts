@@ -1,4 +1,4 @@
-import { fetch } from "@/core/api/fetcher";
+﻿import { fetch } from "@/core/api/fetcher";
 import { getBackendBaseURL } from "@/core/config";
 
 import type { Agent, CreateAgentRequest, UpdateAgentRequest } from "./types";
@@ -88,7 +88,7 @@ export async function checkAgentName(
     );
   } catch {
     throw new AgentNameCheckError(
-      "Could not reach the DeerFlow backend.",
+      "Could not reach the Aether 靈境 backend.",
       "backend_unreachable",
     );
   }
@@ -100,7 +100,7 @@ export async function checkAgentName(
     }
     if (BACKEND_UNAVAILABLE_STATUSES.has(res.status)) {
       throw new AgentNameCheckError(
-        "Could not reach the DeerFlow backend.",
+        "Could not reach the Aether 靈境 backend.",
         "backend_unreachable",
       );
     }
@@ -111,3 +111,4 @@ export async function checkAgentName(
   }
   return res.json() as Promise<{ available: boolean; name: string }>;
 }
+

@@ -29,7 +29,7 @@ export function Hero({ className }: { className?: string }) {
         />
       </div>
       <FlickeringGrid
-        className="absolute inset-0 z-0 translate-y-8 mask-[url(/images/deer.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
+        className="absolute inset-0 z-0 translate-y-8 mask-[url(/images/aether-mark.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
         squareSize={4}
         gridGap={4}
         color={"white"}
@@ -55,7 +55,7 @@ export function Hero({ className }: { className?: string }) {
               "Learn Anything",
             ]}
           />{" "}
-          <div>with DeerFlow</div>
+          <div>with Aether 靈境</div>
         </h1>
         {env.NEXT_PUBLIC_STATIC_WEBSITE_ONLY && (
           <a
@@ -80,7 +80,7 @@ export function Hero({ className }: { className?: string }) {
         </p>
         <Link href="/workspace">
           <Button className="size-lg mt-8 scale-108" size="lg">
-            <span className="text-md">Get Started with 2.0</span>
+            <span className="text-md">Enter Aether</span>
             <ChevronRightIcon className="size-4" />
           </Button>
         </Link>

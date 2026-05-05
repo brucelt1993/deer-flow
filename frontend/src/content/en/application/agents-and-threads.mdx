@@ -1,13 +1,13 @@
----
+﻿---
 title: Agents and Threads
-description: DeerFlow App supports multiple named agents and maintains conversation state across sessions through threads and checkpointing.
+description: Aether App supports multiple named agents and maintains conversation state across sessions through threads and checkpointing.
 ---
 
 import { Callout, Cards, Steps } from "nextra/components";
 
 # Agents and Threads
 
-DeerFlow App supports multiple named agents and maintains conversation state across sessions through threads and checkpointing.
+Aether App supports multiple named agents and maintains conversation state across sessions through threads and checkpointing.
 
 ## Agents
 
@@ -107,14 +107,14 @@ checkpointer:
 # PostgreSQL (multi-process, production)
 # checkpointer:
 #   type: postgres
-#   connection_string: postgresql://user:password@localhost:5432/deerflow
+#   connection_string: postgresql://user:password@localhost:5432/Aether
 ```
 
 <Callout type="info">
   The LangGraph Server manages its own state separately. The
   <code>checkpointer</code> setting in <code>config.yaml</code> applies to the
-  embedded <code>DeerFlowClient</code> (used in direct Python integrations), not
-  to the LangGraph Server deployment used by DeerFlow App.
+  embedded <code>AetherClient</code> (used in direct Python integrations), not
+  to the LangGraph Server deployment used by Aether App.
 </Callout>
 
 ### Thread data storage
@@ -139,3 +139,5 @@ In Docker deployments, this path is bind-mounted from the host so that thread da
     href="/docs/application/operations-and-troubleshooting"
   />
 </Cards>
+
+

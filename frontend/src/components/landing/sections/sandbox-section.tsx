@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   AnimatedSpan,
@@ -15,7 +15,7 @@ export function SandboxSection({ className }: { className?: string }) {
       title="Agent Runtime Environment"
       subtitle={
         <p>
-          We give DeerFlow a &quot;computer&quot;, which can execute commands,
+          We give Aether 靈境 a &quot;computer&quot;, which can execute commands,
           manage files, and run long tasks — all in a secure Docker-based
           sandbox
         </p>
@@ -124,3 +124,4 @@ export function SandboxSection({ className }: { className?: string }) {
     </Section>
   );
 }
+

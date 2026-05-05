@@ -1,4 +1,4 @@
----
+﻿---
 title: Skills
 description: A skill is more than a prompt. It is a self-contained capability package that can include structured instructions, step-by-step workflows, domain-specific best practices, supporting resources, and tool configurations. Skills are loaded on demand — they inject their content when a task calls for them and stay out of the context otherwise.
 ---
@@ -42,7 +42,7 @@ The `SKILL.md` file is the authoritative definition of the skill. It is parsed b
 
 ## Built-in skills
 
-DeerFlow ships with the following public skills:
+Aether ships with the following public skills:
 
 | Skill                          | Description                                                                      |
 | ------------------------------ | -------------------------------------------------------------------------------- |
@@ -110,7 +110,7 @@ The `container_path` is important: it tells the agent where to find skill resour
 
 Skill availability is tracked in `extensions_config.json` (separate from `config.yaml`). You can manage skill state:
 
-- **Through the DeerFlow App UI**: the skills panel lets you toggle skills on and off.
+- **Through the Aether App UI**: the skills panel lets you toggle skills on and off.
 - **Through the Gateway API**: `POST /api/extensions/skills/{name}/enable` and `/disable`.
 - **By editing `extensions_config.json` directly**.
 
@@ -135,7 +135,7 @@ skills:
 
 ## Skill evolution
 
-DeerFlow includes an optional **skill evolution** feature that allows the agent to autonomously create and improve skills in the `skills/custom/` directory:
+Aether includes an optional **skill evolution** feature that allows the agent to autonomously create and improve skills in the `skills/custom/` directory:
 
 ```yaml
 skill_evolution:
@@ -163,3 +163,4 @@ The `SKILL.md` format follows the same structure as the built-in skills. Use one
   <Cards.Card title="Sandbox" href="/docs/harness/sandbox" />
   <Cards.Card title="Tools" href="/docs/harness/tools" />
 </Cards>
+

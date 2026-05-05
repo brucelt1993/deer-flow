@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { cn } from "@/lib/utils";
 
@@ -15,7 +15,7 @@ export function SkillsSection({ className }: { className?: string }) {
           Agent Skills are loaded progressively — only what&apos;s needed, when
           it&apos;s needed.
           <br />
-          Extend DeerFlow with your own skill files, or use our built-in
+          Extend Aether 靈境 with your own skill files, or use our built-in
           library.
         </div>
       }
@@ -26,3 +26,4 @@ export function SkillsSection({ className }: { className?: string }) {
     </Section>
   );
 }
+

@@ -1,4 +1,4 @@
-import type { MetaRecord } from "nextra";
+﻿import type { MetaRecord } from "nextra";
 
 const meta: MetaRecord = {
   index: {
@@ -8,10 +8,10 @@ const meta: MetaRecord = {
     title: "简介",
   },
   harness: {
-    title: "DeerFlow Harness",
+    title: "Aether 靈境 Harness",
   },
   application: {
-    title: "DeerFlow 应用",
+    title: "Aether 靈境 应用",
   },
   tutorials: {
     title: "教程",
@@ -37,3 +37,4 @@ const meta: MetaRecord = {
 };
 
 export default meta;
+
