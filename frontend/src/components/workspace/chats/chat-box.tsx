@@ -113,20 +113,20 @@ const ChatBox: React.FC<{ children: React.ReactNode; threadId: string }> = ({
       <ResizableHandle
         id={`${resizableIdBase}-separator`}
         className={cn(
-          "opacity-33 hover:opacity-100",
+          "bg-border/70 opacity-60 hover:opacity-100",
           !artifactPanelOpen && "pointer-events-none opacity-0",
         )}
       />
       <ResizablePanel
         className={cn(
-          "transition-all duration-300 ease-in-out",
+          "border-l border-border/70 bg-secondary/40 transition-all duration-300 ease-in-out",
           !artifactsOpen && "opacity-0",
         )}
         id="artifacts"
       >
         <div
           className={cn(
-            "h-full p-4 transition-transform duration-300 ease-in-out",
+            "h-full p-3 transition-transform duration-300 ease-in-out",
             artifactPanelOpen ? "translate-x-0" : "translate-x-full",
           )}
         >
@@ -137,7 +137,7 @@ const ChatBox: React.FC<{ children: React.ReactNode; threadId: string }> = ({
               threadId={threadId}
             />
           ) : (
-            <div className="relative flex size-full justify-center">
+            <div className="relative flex size-full justify-center rounded-md border border-primary/15 bg-card/85 shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
               <div className="absolute top-1 right-1 z-30">
                 <Button
                   size="icon-sm"
@@ -158,11 +158,13 @@ const ChatBox: React.FC<{ children: React.ReactNode; threadId: string }> = ({
               ) : (
                 <div className="flex size-full max-w-(--container-width-sm) flex-col justify-center p-4 pt-8">
                   <header className="shrink-0">
-                    <h2 className="text-lg font-medium">Artifacts</h2>
+                    <h2 className="text-base font-semibold tracking-normal">
+                      Artifacts
+                    </h2>
                   </header>
                   <main className="min-h-0 grow">
                     <ArtifactFileList
-                      className="max-w-(--container-width-sm) p-4 pt-12"
+                      className="max-w-(--container-width-sm) p-4 pt-8"
                       files={thread.values.artifacts ?? []}
                       threadId={threadId}
                     />

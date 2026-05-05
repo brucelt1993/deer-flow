@@ -16,7 +16,7 @@ export type ArtifactProps = HTMLAttributes<HTMLDivElement>;
 export const Artifact = ({ className, ...props }: ArtifactProps) => (
   <div
     className={cn(
-      "bg-background flex flex-col overflow-hidden rounded-lg border shadow-lg",
+      "bg-card/95 flex flex-col overflow-hidden rounded-md border border-primary/15 shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-xl",
       className,
     )}
     {...props}
@@ -31,7 +31,7 @@ export const ArtifactHeader = ({
 }: ArtifactHeaderProps) => (
   <div
     className={cn(
-      "bg-muted/50 flex items-center justify-between border-b px-4 py-3",
+      "bg-secondary/55 flex min-h-12 items-center justify-between border-b border-border/80 px-3 py-2",
       className,
     )}
     {...props}
@@ -49,7 +49,7 @@ export const ArtifactClose = ({
 }: ArtifactCloseProps) => (
   <Button
     className={cn(
-      "text-muted-foreground hover:text-foreground size-8 p-0",
+      "text-muted-foreground hover:bg-primary/10 hover:text-primary size-8 rounded-md p-0",
       className,
     )}
     size={size}
@@ -66,7 +66,7 @@ export type ArtifactTitleProps = HTMLAttributes<HTMLParagraphElement>;
 
 export const ArtifactTitle = ({ className, ...props }: ArtifactTitleProps) => (
   <div
-    className={cn("text-foreground text-sm font-medium", className)}
+    className={cn("text-foreground text-sm font-semibold", className)}
     {...props}
   />
 );
@@ -108,7 +108,7 @@ export const ArtifactAction = ({
   const button = (
     <Button
       className={cn(
-        "text-muted-foreground hover:text-foreground size-8 p-0",
+        "text-muted-foreground hover:bg-primary/10 hover:text-primary size-8 rounded-md p-0",
         className,
       )}
       size={size}
@@ -144,7 +144,7 @@ export const ArtifactContent = ({
   ...props
 }: ArtifactContentProps) => (
   <div
-    className={cn("min-h-0 flex-1 overflow-auto p-4", className)}
+    className={cn("bg-background/80 min-h-0 flex-1 overflow-auto p-4", className)}
     {...props}
   />
 );

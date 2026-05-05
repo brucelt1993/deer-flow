@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  BellIcon,
-  BrainIcon,
-  PaletteIcon,
-  SparklesIcon,
-  UserIcon,
-  WrenchIcon,
-} from "lucide-react";
+import { BrainIcon, PaletteIcon, UserIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -20,19 +13,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { AccountSettingsPage } from "@/components/workspace/settings/account-settings-page";
 import { AppearanceSettingsPage } from "@/components/workspace/settings/appearance-settings-page";
 import { MemorySettingsPage } from "@/components/workspace/settings/memory-settings-page";
-import { NotificationSettingsPage } from "@/components/workspace/settings/notification-settings-page";
-import { SkillSettingsPage } from "@/components/workspace/settings/skill-settings-page";
-import { ToolSettingsPage } from "@/components/workspace/settings/tool-settings-page";
 import { useI18n } from "@/core/i18n/hooks";
 import { cn } from "@/lib/utils";
 
-export type SettingsSection =
-  | "account"
-  | "appearance"
-  | "memory"
-  | "tools"
-  | "skills"
-  | "notification";
+export type SettingsSection = "account" | "appearance" | "memory";
 
 type SettingsDialogProps = React.ComponentProps<typeof Dialog> & {
   defaultSection?: SettingsSection;
@@ -63,25 +47,15 @@ export function SettingsDialog(props: SettingsDialogProps) {
         icon: PaletteIcon,
       },
       {
-        id: "notification",
-        label: t.settings.sections.notification,
-        icon: BellIcon,
-      },
-      {
         id: "memory",
         label: t.settings.sections.memory,
         icon: BrainIcon,
       },
-      { id: "tools", label: t.settings.sections.tools, icon: WrenchIcon },
-      { id: "skills", label: t.settings.sections.skills, icon: SparklesIcon },
     ],
     [
       t.settings.sections.account,
       t.settings.sections.appearance,
       t.settings.sections.memory,
-      t.settings.sections.tools,
-      t.settings.sections.skills,
-      t.settings.sections.notification,
     ],
   );
   return (
@@ -129,13 +103,6 @@ export function SettingsDialog(props: SettingsDialogProps) {
               {activeSection === "account" && <AccountSettingsPage />}
               {activeSection === "appearance" && <AppearanceSettingsPage />}
               {activeSection === "memory" && <MemorySettingsPage />}
-              {activeSection === "tools" && <ToolSettingsPage />}
-              {activeSection === "skills" && (
-                <SkillSettingsPage
-                  onClose={() => props.onOpenChange?.(false)}
-                />
-              )}
-              {activeSection === "notification" && <NotificationSettingsPage />}
             </div>
           </ScrollArea>
         </div>

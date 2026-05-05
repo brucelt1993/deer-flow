@@ -125,17 +125,17 @@ export function ArtifactFileDetail({
   }, [threadId, filepath, isInstalling]);
   return (
     <Artifact className={cn(className)}>
-      <ArtifactHeader className="px-2">
-        <div className="flex items-center gap-2">
-          <ArtifactTitle>
+      <ArtifactHeader>
+        <div className="flex min-w-0 items-center gap-2">
+          <ArtifactTitle className="min-w-0">
             {isWriteFile ? (
-              <div className="px-2">{getFileName(filepath)}</div>
+              <div className="truncate px-2">{getFileName(filepath)}</div>
             ) : (
               <Select value={filepath} onValueChange={select}>
-                <SelectTrigger className="border-none bg-transparent! shadow-none select-none focus:outline-0 active:outline-0">
+                <SelectTrigger className="h-8 max-w-56 border-none bg-transparent! px-2 text-sm font-semibold shadow-none select-none focus:outline-0 active:outline-0">
                   <SelectValue placeholder="Select a file" />
                 </SelectTrigger>
-                <SelectContent className="select-none">
+                <SelectContent className="rounded-md select-none">
                   <SelectGroup>
                     {(artifacts ?? []).map((filepath) => (
                       <SelectItem key={filepath} value={filepath}>
@@ -151,7 +151,7 @@ export function ArtifactFileDetail({
         <div className="flex min-w-0 grow items-center justify-center">
           {isSupportPreview && (
             <ToggleGroup
-              className="mx-auto"
+              className="mx-auto rounded-md border bg-background/75 p-0.5"
               type="single"
               variant="outline"
               size="sm"
@@ -162,10 +162,10 @@ export function ArtifactFileDetail({
                 }
               }}
             >
-              <ToggleGroupItem value="code">
+              <ToggleGroupItem className="size-7 px-0" value="code">
                 <Code2Icon />
               </ToggleGroupItem>
-              <ToggleGroupItem value="preview">
+              <ToggleGroupItem className="size-7 px-0" value="preview">
                 <EyeIcon />
               </ToggleGroupItem>
             </ToggleGroup>
@@ -266,7 +266,7 @@ export function ArtifactFileDetail({
         )}
         {!isCodeFile && (
           <iframe
-            className="size-full"
+            className="size-full bg-card"
             src={urlOfArtifact({ filepath, threadId, isMock })}
           />
         )}
@@ -301,7 +301,7 @@ export function ArtifactFilePreview({
 
   if (language === "markdown") {
     return (
-      <div className="size-full px-4">
+      <div className="size-full px-5 py-4">
         <Streamdown
           className="size-full"
           {...streamdownPlugins}

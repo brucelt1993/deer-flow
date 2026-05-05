@@ -72,17 +72,17 @@ export function ArtifactFileList({
   );
 
   return (
-    <ul className={cn("flex w-full flex-col gap-4", className)}>
+    <ul className={cn("flex w-full flex-col gap-3", className)}>
       {files.map((file) => (
         <Card
           key={file}
-          className="relative cursor-pointer p-3"
+          className="relative cursor-pointer rounded-md border-primary/15 bg-card/90 p-3 py-3 shadow-none transition-colors hover:border-primary/35 hover:bg-accent/35"
           onClick={() => handleClick(file)}
         >
           <CardHeader className="grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-1 pr-2 pl-1">
-            <CardTitle className="relative min-w-0 pl-8 leading-tight [overflow-wrap:anywhere] break-words">
+            <CardTitle className="relative min-w-0 pl-8 text-sm leading-tight [overflow-wrap:anywhere] break-words">
               <div className="min-w-0">{getFileName(file)}</div>
-              <div className="absolute top-2 -left-0.5">
+              <div className="text-primary absolute top-2 -left-0.5">
                 {getFileIcon(file, "size-6")}
               </div>
             </CardTitle>

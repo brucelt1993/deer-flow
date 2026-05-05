@@ -442,7 +442,7 @@ export function InputBox({
         <div className="flex items-center justify-center pb-2">
           <div className="flex items-center gap-2">
             {followupsLoading ? (
-              <div className="text-muted-foreground bg-background/80 rounded-full border px-4 py-2 text-xs backdrop-blur-sm">
+              <div className="text-muted-foreground bg-card/85 rounded-md border px-3 py-2 text-xs shadow-sm backdrop-blur-xl">
                 {t.inputBox.followupLoading}
               </div>
             ) : (
@@ -456,7 +456,7 @@ export function InputBox({
                 ))}
                 <Button
                   aria-label={t.common.close}
-                  className="text-muted-foreground cursor-pointer rounded-full px-3 text-xs font-normal"
+                  className="text-muted-foreground cursor-pointer rounded-md px-3 text-xs font-normal"
                   variant="outline"
                   size="sm"
                   type="button"
@@ -471,7 +471,7 @@ export function InputBox({
       )}
       <PromptInput
         className={cn(
-          "bg-background/85 rounded-2xl backdrop-blur-sm transition-all duration-300 ease-out *:data-[slot='input-group']:rounded-2xl",
+          "bg-card/92 rounded-lg border shadow-[0_18px_55px_rgba(15,23,42,0.14)] backdrop-blur-xl transition-all duration-300 ease-out *:data-[slot='input-group']:rounded-lg",
           className,
         )}
         disabled={disabled}
@@ -847,12 +847,12 @@ export function InputBox({
           </PromptInputTools>
         </PromptInputFooter>
         {!isNewThread && (
-          <div className="bg-background absolute right-0 -bottom-[17px] left-0 z-0 h-4"></div>
+          <div className="from-card/85 absolute right-0 -bottom-[17px] left-0 z-0 h-4 bg-linear-to-b to-transparent"></div>
         )}
       </PromptInput>
 
       {isNewThread && searchParams.get("mode") !== "skill" && (
-        <div className="flex items-center justify-center pt-2">
+        <div className="flex items-center justify-center pt-3">
           <SuggestionList />
         </div>
       )}
@@ -908,7 +908,7 @@ function SuggestionList() {
   return (
     <Suggestions className="min-h-16 w-fit items-start">
       <ConfettiButton
-        className="text-muted-foreground cursor-pointer rounded-full px-4 text-xs font-normal"
+        className="text-muted-foreground bg-card/75 cursor-pointer rounded-md px-3 text-xs font-normal shadow-sm backdrop-blur-xl"
         variant="outline"
         size="sm"
         onClick={() => handleSuggestionClick(t.inputBox.surpriseMePrompt)}
@@ -920,6 +920,7 @@ function SuggestionList() {
           key={suggestion.suggestion}
           icon={suggestion.icon}
           suggestion={suggestion.suggestion}
+          className="bg-card/75 rounded-md shadow-sm backdrop-blur-xl"
           onClick={() => handleSuggestionClick(suggestion.prompt)}
         />
       ))}

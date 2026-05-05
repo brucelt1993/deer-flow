@@ -260,7 +260,7 @@ export function MessageList({
     <Conversation
       className={cn("flex size-full flex-col justify-center", className)}
     >
-      <ConversationContent className="mx-auto w-full max-w-(--container-width-md) gap-8 pt-8">
+      <ConversationContent className="mx-auto w-full max-w-(--container-width-md) gap-8 px-5 pt-8">
         <LoadMoreHistoryIndicator
           isLoading={isHistoryLoading}
           hasMore={hasMoreHistory}

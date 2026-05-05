@@ -69,7 +69,7 @@ function SkillSettingsList({
   };
   return (
     <div className="flex w-full flex-col gap-4">
-      <header className="flex justify-between">
+      <header className="flex flex-wrap justify-between gap-3">
         <div className="flex gap-2">
           <Tabs defaultValue="public" onValueChange={setFilter}>
             <TabsList variant="line">
@@ -90,7 +90,11 @@ function SkillSettingsList({
       )}
       {filteredSkills.length > 0 &&
         filteredSkills.map((skill) => (
-          <Item className="w-full" variant="outline" key={skill.name}>
+          <Item
+            className="w-full border-primary/15 bg-background/65 shadow-xs"
+            variant="outline"
+            key={skill.name}
+          >
             <ItemContent>
               <ItemTitle>
                 <div className="flex items-center gap-2">{skill.name}</div>

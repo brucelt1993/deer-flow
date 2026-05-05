@@ -38,16 +38,21 @@ export function WorkspaceSidebar({
         onOpenChange={setSettingsOpen}
         defaultSection={settingsDefaultSection}
       />
-      <Sidebar variant="sidebar" collapsible="icon" {...props}>
-        <SidebarHeader className="py-0">
+      <Sidebar
+        variant="sidebar"
+        collapsible="icon"
+        className="border-r border-sidebar-border/70 shadow-[8px_0_30px_rgba(15,23,42,0.08)]"
+        {...props}
+      >
+        <SidebarHeader className="border-b border-sidebar-border/70 px-2 py-2">
           <WorkspaceHeader />
         </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent className="gap-2 px-2 py-3">
           <WorkspaceNavChatList />
-          <WorkspaceNavUtilityList onOpenSettings={openSettings} />
+          <WorkspaceNavUtilityList />
           {isSidebarOpen && <RecentChatList />}
         </SidebarContent>
-        <SidebarFooter>
+        <SidebarFooter className="border-t border-sidebar-border/70 px-2 py-2">
           <WorkspaceNavMenu onOpenSettings={openSettings} />
         </SidebarFooter>
         <SidebarRail />

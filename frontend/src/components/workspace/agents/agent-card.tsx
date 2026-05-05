@@ -53,11 +53,11 @@ export function AgentCard({ agent }: AgentCardProps) {
 
   return (
     <>
-      <Card className="group flex flex-col transition-shadow hover:shadow-md">
+      <Card className="group flex flex-col rounded-md border-primary/15 bg-card/88 py-5 shadow-none transition-colors hover:border-primary/35 hover:bg-card">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
             <div className="flex items-center gap-2">
-              <div className="bg-primary/10 text-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-lg">
+              <div className="bg-primary/10 text-primary flex h-9 w-9 shrink-0 items-center justify-center rounded-md">
                 <BotIcon className="h-5 w-5" />
               </div>
               <div className="min-w-0">
@@ -105,7 +105,7 @@ export function AgentCard({ agent }: AgentCardProps) {
         )}
 
         <CardFooter className="mt-auto flex items-center justify-between gap-2 pt-3">
-          <Button size="sm" className="flex-1" onClick={handleChat}>
+          <Button size="sm" className="flex-1 rounded-md" onClick={handleChat}>
             <MessageSquareIcon className="mr-1.5 h-3.5 w-3.5" />
             {t.agents.chat}
           </Button>

@@ -19,9 +19,8 @@ export function AgentGallery() {
   };
 
   return (
-    <div className="flex size-full flex-col">
-      {/* Page header */}
-      <div className="flex items-center justify-between border-b px-6 py-4">
+    <div className="from-background via-background to-secondary/45 flex size-full flex-col bg-linear-to-br">
+      <div className="m-4 mb-0 flex items-center justify-between rounded-md border border-primary/15 bg-card/82 px-5 py-4 shadow-[0_18px_45px_rgba(15,23,42,0.08)] backdrop-blur-xl">
         <div>
           <h1 className="text-xl font-semibold">{t.agents.title}</h1>
           <p className="text-muted-foreground mt-0.5 text-sm">
@@ -34,15 +33,14 @@ export function AgentGallery() {
         </Button>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-4">
         {isLoading ? (
           <div className="text-muted-foreground flex h-40 items-center justify-center text-sm">
             {t.common.loading}
           </div>
         ) : agents.length === 0 ? (
-          <div className="flex h-64 flex-col items-center justify-center gap-3 text-center">
-            <div className="bg-muted flex h-14 w-14 items-center justify-center rounded-full">
+          <div className="flex h-64 flex-col items-center justify-center gap-3 rounded-md border border-dashed border-primary/20 bg-card/65 text-center">
+            <div className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-md">
               <BotIcon className="text-muted-foreground h-7 w-7" />
             </div>
             <div>

@@ -21,13 +21,13 @@ function NavMenuButtonContent({
   t: ReturnType<typeof useI18n>["t"];
 }) {
   return isSidebarOpen ? (
-    <div className="text-muted-foreground flex w-full items-center gap-2 text-left text-sm">
+    <div className="text-sidebar-foreground/72 flex w-full items-center gap-2 text-left text-sm">
       <SettingsIcon className="size-4" />
       <span>{t.common.settings}</span>
     </div>
   ) : (
     <div className="flex size-full items-center justify-center">
-      <SettingsIcon className="text-muted-foreground size-4" />
+      <SettingsIcon className="text-sidebar-foreground/72 size-4" />
     </div>
   );
 }
@@ -51,7 +51,7 @@ export function WorkspaceNavMenu({ onOpenSettings }: WorkspaceNavMenuProps) {
         {mounted ? (
           <SidebarMenuButton
             size="lg"
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             onClick={() => onOpenSettings("appearance")}
             tooltip={t.common.settings}
           >

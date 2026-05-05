@@ -165,8 +165,8 @@ export function RecentChatList() {
   }
   return (
     <>
-      <SidebarGroup>
-        <SidebarGroupLabel>
+      <SidebarGroup className="mt-3 border-t border-sidebar-border/45 pt-3">
+        <SidebarGroupLabel className="text-sidebar-foreground/45 px-2 text-[10px] font-semibold tracking-[0.14em] uppercase">
           {env.NEXT_PUBLIC_STATIC_WEBSITE_ONLY !== "true"
             ? t.sidebar.recentChats
             : t.sidebar.demoChats}
@@ -181,10 +181,14 @@ export function RecentChatList() {
                     key={thread.thread_id}
                     className="group/side-menu-item"
                   >
-                    <SidebarMenuButton isActive={isActive} asChild>
+                    <SidebarMenuButton
+                      isActive={isActive}
+                      asChild
+                      className="text-sidebar-foreground/64 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-foreground"
+                    >
                       <div>
                         <Link
-                          className="text-muted-foreground block w-full whitespace-nowrap group-hover/side-menu-item:overflow-hidden"
+                          className="block w-full whitespace-nowrap group-hover/side-menu-item:overflow-hidden"
                           href={pathOfThread(thread)}
                         >
                           {titleOfThread(thread)}
@@ -194,7 +198,7 @@ export function RecentChatList() {
                             <DropdownMenuTrigger asChild>
                               <SidebarMenuAction
                                 showOnHover
-                                className="bg-background/50 hover:bg-background"
+                                className="bg-sidebar/80 text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                               >
                                 <MoreHorizontal />
                                 <span className="sr-only">{t.common.more}</span>

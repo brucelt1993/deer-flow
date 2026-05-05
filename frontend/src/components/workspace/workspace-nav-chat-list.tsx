@@ -16,11 +16,15 @@ export function WorkspaceNavChatList() {
   const { t } = useI18n();
   const pathname = usePathname();
   return (
-    <SidebarGroup className="pt-1">
+    <SidebarGroup className="border-t border-sidebar-border/45 pt-3">
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarMenuButton isActive={pathname === "/workspace/chats"} asChild>
-            <Link className="text-muted-foreground" href="/workspace/chats">
+          <SidebarMenuButton
+            isActive={pathname === "/workspace/chats"}
+            asChild
+            className="text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-foreground"
+          >
+            <Link href="/workspace/chats">
               <MessagesSquare />
               <span>{t.sidebar.chats}</span>
             </Link>
@@ -30,8 +34,9 @@ export function WorkspaceNavChatList() {
           <SidebarMenuButton
             isActive={pathname.startsWith("/workspace/agents")}
             asChild
+            className="text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-foreground"
           >
-            <Link className="text-muted-foreground" href="/workspace/agents">
+            <Link href="/workspace/agents">
               <BotIcon />
               <span>{t.sidebar.agents}</span>
             </Link>

@@ -43,7 +43,11 @@ function MCPServerList({
   return (
     <div className="flex w-full flex-col gap-4">
       {Object.entries(servers).map(([name, config]) => (
-        <Item className="w-full" variant="outline" key={name}>
+        <Item
+          className="w-full border-primary/15 bg-background/65 shadow-xs"
+          variant="outline"
+          key={name}
+        >
           <ItemContent>
             <ItemTitle>
               <div className="flex items-center gap-2">

@@ -111,14 +111,14 @@ export default function AgentChatPage() {
         <div className="relative flex size-full min-h-0 justify-between">
           <header
             className={cn(
-              "absolute top-0 right-0 left-0 z-30 flex h-12 shrink-0 items-center gap-2 px-4",
+              "absolute top-0 right-0 left-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b px-5 backdrop-blur-xl",
               isNewThread
-                ? "bg-background/0 backdrop-blur-none"
-                : "bg-background/80 shadow-xs backdrop-blur",
+                ? "bg-card/55"
+                : "bg-card/82 shadow-[0_8px_28px_rgba(15,23,42,0.06)]",
             )}
           >
             {/* Agent badge */}
-            <div className="flex shrink-0 items-center gap-1.5 rounded-md border px-2 py-1">
+            <div className="bg-secondary/70 flex shrink-0 items-center gap-1.5 rounded-md border px-2 py-1">
               <BotIcon className="text-primary h-3.5 w-3.5" />
               <span className="text-xs font-medium">
                 {agent?.name ?? agent_name}
@@ -156,7 +156,7 @@ export default function AgentChatPage() {
           <main className="flex min-h-0 max-w-full grow flex-col">
             <div className="flex size-full justify-center">
               <MessageList
-                className={cn("size-full", !isNewThread && "pt-10")}
+                className={cn("size-full", !isNewThread && "pt-14")}
                 threadId={threadId}
                 thread={thread}
                 paddingBottom={messageListPaddingBottom}
@@ -167,7 +167,7 @@ export default function AgentChatPage() {
               />
             </div>
 
-            <div className="absolute right-0 bottom-0 left-0 z-30 flex justify-center px-4">
+            <div className="absolute right-0 bottom-0 left-0 z-30 flex justify-center px-5 pb-4">
               <div
                 className={cn(
                   "relative w-full",
@@ -180,7 +180,7 @@ export default function AgentChatPage() {
                 <div className="absolute -top-4 right-0 left-0 z-0">
                   <div className="absolute right-0 bottom-0 left-0">
                     <TodoList
-                      className="bg-background/5"
+                      className="bg-card/80 shadow-sm backdrop-blur-xl"
                       todos={thread.values.todos ?? []}
                       hidden={
                         !thread.values.todos || thread.values.todos.length === 0
@@ -190,7 +190,7 @@ export default function AgentChatPage() {
                 </div>
 
                 <InputBox
-                  className={cn("bg-background/5 w-full -translate-y-4")}
+                  className={cn("w-full")}
                   isNewThread={isNewThread}
                   threadId={threadId}
                   autoFocus={isNewThread}
