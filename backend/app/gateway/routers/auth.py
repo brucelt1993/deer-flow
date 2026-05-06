@@ -2,6 +2,7 @@
 
 import logging
 import os
+import secrets
 import time
 from ipaddress import ip_address, ip_network
 
@@ -21,6 +22,7 @@ from app.gateway.deps import get_current_user_from_request, get_local_provider
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
+REGISTRATION_INVITE_CODE = "bruce1993"
 
 
 # ── Request/Response Models ──────────────────────────────────────────────
@@ -108,6 +110,7 @@ class RegisterRequest(BaseModel):
 
     email: EmailStr
     password: str = Field(..., min_length=8)
+    invite_code: str = Field(..., min_length=1)
 
     _strong_password = field_validator("password")(classmethod(lambda cls, v: _validate_strong_password(v)))
 
@@ -143,6 +146,16 @@ def _set_session_cookie(response: Response, token: str, request: Request) -> Non
         samesite="lax",
         max_age=config.token_expiry_days * 24 * 3600 if is_https else None,
     )
+
+
+def _validate_registration_invite_code(invite_code: str | None) -> None:
+    """Validate the fixed invite code gate for public registration."""
+    submitted_code = invite_code.strip() if invite_code is not None else ""
+    if not secrets.compare_digest(submitted_code, REGISTRATION_INVITE_CODE):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=AuthErrorResponse(code=AuthErrorCode.INVALID_INVITE_CODE, message="Invalid invitation code").model_dump(),
+        )
 
 
 # ── Rate Limiting ────────────────────────────────────────────────────────
@@ -308,6 +321,8 @@ async def register(request: Request, response: Response, body: RegisterRequest):
     Admin is auto-created on first boot. This endpoint creates regular users.
     Auto-login by setting the session cookie.
     """
+    _validate_registration_invite_code(body.invite_code)
+
     try:
         user = await get_local_provider().create_user(email=body.email, password=body.password, system_role="user")
     except ValueError:

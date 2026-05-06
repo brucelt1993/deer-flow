@@ -101,7 +101,14 @@ def test_initialize_rejected_when_admin_exists(client):
 def test_initialize_register_does_not_block_initialization(client):
     """/register creating a user before /initialize doesn't block admin creation."""
     # Register a regular user first
-    client.post("/api/v1/auth/register", json={"email": "regular@example.com", "password": "Tr0ub4dor3a"})
+    client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": "regular@example.com",
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
+    )
     # /initialize should still succeed (checks admin_count, not total user_count)
     resp = client.post("/api/v1/auth/initialize", json=_init_payload())
     assert resp.status_code == 201
@@ -162,7 +169,14 @@ def test_setup_status_after_initialization(client):
 
 def test_setup_status_false_when_only_regular_user_exists(client):
     """setup-status returns needs_setup=True even when regular users exist (no admin)."""
-    client.post("/api/v1/auth/register", json={"email": "regular@example.com", "password": "Tr0ub4dor3a"})
+    client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": "regular@example.com",
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
+    )
     resp = client.get("/api/v1/auth/setup-status")
     assert resp.status_code == 200
     assert resp.json()["needs_setup"] is True

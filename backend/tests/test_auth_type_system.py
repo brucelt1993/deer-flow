@@ -578,7 +578,11 @@ def test_api_login_success_no_token_in_body():
     # Register first
     client.post(
         "/api/v1/auth/register",
-        json={"email": "contract-test@test.com", "password": "securepassword123"},
+        json={
+            "email": "contract-test@test.com",
+            "password": "securepassword123",
+            "invite_code": "bruce1993",
+        },
     )
     # Login
     resp = client.post(
@@ -599,12 +603,58 @@ def test_api_register_duplicate_returns_structured_400():
     client = _get_auth_client()
     email = "dup-contract-test@test.com"
     # First register
-    client.post("/api/v1/auth/register", json={"email": email, "password": "Tr0ub4dor3a"})
+    client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": email,
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
+    )
     # Duplicate
-    resp = client.post("/api/v1/auth/register", json={"email": email, "password": "AnotherStr0ngPwd!"})
+    resp = client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": email,
+            "password": "AnotherStr0ngPwd!",
+            "invite_code": "bruce1993",
+        },
+    )
     assert resp.status_code == 400
     body = resp.json()
     assert body["detail"]["code"] == "email_already_exists"
+
+
+def test_api_register_rejects_invalid_invite_code():
+    """The fixed invite code gates public registration."""
+    _setup_config()
+    client = _get_auth_client()
+    resp = client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": _unique_email("invite-bad"),
+            "password": "Tr0ub4dor3a",
+            "invite_code": "wrong-code",
+        },
+    )
+    assert resp.status_code == 400
+    body = resp.json()
+    assert body["detail"]["code"] == "invalid_invite_code"
+
+
+def test_api_register_accepts_valid_invite_code():
+    """The fixed invite code allows registration when matched."""
+    _setup_config()
+    client = _get_auth_client()
+    resp = client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": _unique_email("invite-ok"),
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
+    )
+    assert resp.status_code == 201
 
 
 # ── Cookie security: HTTP vs HTTPS ────────────────────────────────────
@@ -625,7 +675,11 @@ def test_register_http_cookie_httponly_true_secure_false():
     client = _get_auth_client()
     resp = client.post(
         "/api/v1/auth/register",
-        json={"email": _unique_email("http-cookie"), "password": "Tr0ub4dor3a"},
+        json={
+            "email": _unique_email("http-cookie"),
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
     )
     assert resp.status_code == 201
     cookie_header = resp.headers.get("set-cookie", "")
@@ -640,7 +694,11 @@ def test_register_https_cookie_httponly_true_secure_true():
     client = _get_auth_client()
     resp = client.post(
         "/api/v1/auth/register",
-        json={"email": _unique_email("https-cookie"), "password": "Tr0ub4dor3a"},
+        json={
+            "email": _unique_email("https-cookie"),
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
         headers={"x-forwarded-proto": "https"},
     )
     assert resp.status_code == 201
@@ -656,7 +714,14 @@ def test_login_https_sets_secure_cookie():
     _setup_config()
     client = _get_auth_client()
     email = _unique_email("https-login")
-    client.post("/api/v1/auth/register", json={"email": email, "password": "Tr0ub4dor3a"})
+    client.post(
+        "/api/v1/auth/register",
+        json={
+            "email": email,
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
+    )
     resp = client.post(
         "/api/v1/auth/login/local",
         data={"username": email, "password": "Tr0ub4dor3a"},
@@ -675,7 +740,11 @@ def test_csrf_cookie_secure_on_https():
     client = _get_auth_client()
     resp = client.post(
         "/api/v1/auth/register",
-        json={"email": _unique_email("csrf-https"), "password": "Tr0ub4dor3a"},
+        json={
+            "email": _unique_email("csrf-https"),
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
         headers={"x-forwarded-proto": "https"},
     )
     assert resp.status_code == 201
@@ -692,7 +761,11 @@ def test_csrf_cookie_not_secure_on_http():
     client = _get_auth_client()
     resp = client.post(
         "/api/v1/auth/register",
-        json={"email": _unique_email("csrf-http"), "password": "Tr0ub4dor3a"},
+        json={
+            "email": _unique_email("csrf-http"),
+            "password": "Tr0ub4dor3a",
+            "invite_code": "bruce1993",
+        },
     )
     assert resp.status_code == 201
     csrf_cookies = [h for h in _get_set_cookie_headers(resp) if "csrf_token=" in h]
