@@ -1,12 +1,25 @@
 "use client";
 
+import {
+  KeyRoundIcon,
+  LockKeyholeIcon,
+  MailIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+  UserCogIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
+import {
+  AuthErrorBanner,
+  AuthField,
+  AuthInput,
+  AuthLoadingScreen,
+  AuthPasswordInput,
+  AuthShell,
+} from "@/components/auth/auth-shell";
 import { Button } from "@/components/ui/button";
-import { FlickeringGrid } from "@/components/ui/flickering-grid";
-import { Input } from "@/components/ui/input";
 import { getCsrfHeaders } from "@/core/api/fetcher";
 import { useAuth } from "@/core/auth/AuthProvider";
 import { parseAuthError } from "@/core/auth/types";
@@ -16,26 +29,22 @@ type SetupMode = "loading" | "init_admin" | "change_password";
 export default function SetupPage() {
   const router = useRouter();
   const { user, isAuthenticated } = useAuth();
-  const { theme, resolvedTheme } = useTheme();
   const [mode, setMode] = useState<SetupMode>("loading");
 
-  // --- Shared state ---
   const [email, setEmail] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // --- Change-password mode only ---
-  const [currentPassword, setCurrentPassword] = useState("");
 
   useEffect(() => {
     let cancelled = false;
 
     if (isAuthenticated && user?.needs_setup) {
       setMode("change_password");
+      setEmail(user.email ?? "");
     } else if (!isAuthenticated) {
-      // Check if the system has no users yet
       void fetch("/api/v1/auth/setup-status")
         .then((r) => r.json())
         .then((data: { needs_setup?: boolean }) => {
@@ -43,7 +52,6 @@ export default function SetupPage() {
           if (data.needs_setup) {
             setMode("init_admin");
           } else {
-            // System already set up and user is not logged in — go to login
             router.push("/login");
           }
         })
@@ -51,17 +59,58 @@ export default function SetupPage() {
           if (!cancelled) router.push("/login");
         });
     } else {
-      // Authenticated but needs_setup is false — already set up
       router.push("/workspace");
     }
 
     return () => {
       cancelled = true;
     };
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, router, user]);
 
-  // ── Init-admin handler ─────────────────────────────────────────────
-  const handleInitAdmin = async (e: React.SubmitEvent) => {
+  const highlights = useMemo(
+    () => [
+      {
+        icon: ShieldCheckIcon,
+        title: "Gateway Controlled",
+        description:
+          "Admin bootstrap and credential updates stay inside the same gateway auth contract used elsewhere.",
+      },
+      {
+        icon: UserCogIcon,
+        title: "One Clean Entry",
+        description:
+          "Initialization and forced credential updates share one consistent product surface instead of standalone forms.",
+      },
+      {
+        icon: SparklesIcon,
+        title: "Ready For Workspace",
+        description:
+          "Once setup is complete you land straight in Aether, without an extra migration or onboarding detour.",
+      },
+    ],
+    [],
+  );
+
+  const panelCopy =
+    mode === "init_admin"
+      ? {
+          panelTag: "Administrator Bootstrap",
+          panelTitle: "Create the first admin account",
+          panelDescription:
+            "This workspace has not been initialized yet. Create the administrator account that will own the first authenticated session.",
+          submitLabel: "Create Admin Account",
+          loadingLabel: "Creating Admin Account...",
+        }
+      : {
+          panelTag: "Credential Update",
+          panelTitle: "Complete your account setup",
+          panelDescription:
+            "Replace the temporary credentials with your real email and a strong password before entering the workspace.",
+          submitLabel: "Complete Setup",
+          loadingLabel: "Completing Setup...",
+        };
+
+  const handleInitAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -97,8 +146,7 @@ export default function SetupPage() {
     }
   };
 
-  // ── Change-password handler ────────────────────────────────────────
-  const handleChangePassword = async (e: React.SubmitEvent) => {
+  const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -142,144 +190,112 @@ export default function SetupPage() {
     }
   };
 
-  const actualTheme = theme === "system" ? resolvedTheme : theme;
-
   if (mode === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted-foreground text-sm">Loading…</p>
-      </div>
-    );
-  }
-
-  // ── Admin initialization form ──────────────────────────────────────
-  if (mode === "init_admin") {
-    return (
-      <div className="bg-background flex min-h-screen items-center justify-center">
-        <FlickeringGrid
-          className="absolute inset-0 z-0 mask-[url(/images/aether-mark.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
-          squareSize={4}
-          gridGap={4}
-          color={actualTheme === "dark" ? "white" : "black"}
-          maxOpacity={0.3}
-          flickerChance={0.25}
-        />
-        <div className="border-border/20 bg-background/5 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-sm">
-          <div className="text-center">
-            <h1 className="font-serif text-3xl">Aether 靈境</h1>
-            <p className="text-muted-foreground mt-2">Create an admin account</p>
-            <p className="text-muted-foreground mt-1 text-xs">
-              Set up the administrator account to get started.
-            </p>
-          </div>
-          <form onSubmit={handleInitAdmin} className="space-y-2">
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="email" className="text-sm font-medium">
-                Email
-              </label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="password" className="text-sm font-medium">
-                Password
-              </label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Password (min. 8 characters)"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-                minLength={8}
-              />
-            </div>
-            <div className="flex flex-col space-y-1">
-              <label htmlFor="confirmPassword" className="text-sm font-medium">
-                Confirm Password
-              </label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                minLength={8}
-              />
-            </div>
-            {error && <p className="ms-1 text-sm text-red-500">{error}</p>}
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating account…" : "Create Admin Account"}
-            </Button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-
-  // ── Change-password form (needs_setup after login) ─────────────────
-  return (
-    <div className="bg-background flex min-h-screen items-center justify-center">
-      <FlickeringGrid
-          className="absolute inset-0 z-0 mask-[url(/images/aether-mark.svg)] mask-size-[100vw] mask-center mask-no-repeat md:mask-size-[72vh]"
-        squareSize={4}
-        gridGap={4}
-        color={actualTheme === "dark" ? "white" : "black"}
-        maxOpacity={0.3}
-        flickerChance={0.25}
+      <AuthLoadingScreen
+        title="Preparing secure entry"
+        description="Checking whether this workspace needs admin bootstrap or a credential refresh."
       />
-      <div className="border-border/20 bg-background/5 w-full max-w-md space-y-6 rounded-3xl border p-8 backdrop-blur-sm">
-        <div className="text-center">
-          <h1 className="font-serif text-3xl">Aether 靈境</h1>
-          <p className="text-muted-foreground mt-2">Complete setup</p>
-          <p className="text-muted-foreground mt-1 text-xs">
-            Set your real email and a new password.
-          </p>
+    );
+  }
+
+  return (
+    <AuthShell
+      panelTag={panelCopy.panelTag}
+      panelTitle={panelCopy.panelTitle}
+      panelDescription={panelCopy.panelDescription}
+      heroTitle="Set the authentication baseline once, then let the workspace take over."
+      heroDescription="Aether should feel coherent even during setup. This flow handles first admin creation and required credential refreshes without dropping back into legacy-looking forms."
+      highlights={highlights}
+      footer={
+        <div className="border-t border-white/10 pt-5 text-xs leading-6 text-white/34">
+          {mode === "init_admin"
+            ? "This step is only available before the first administrator exists."
+            : "After this update the previous temporary credentials are invalidated automatically."}
         </div>
-        <form onSubmit={handleChangePassword} className="space-y-4">
-          <Input
+      }
+    >
+      <form
+        onSubmit={mode === "init_admin" ? handleInitAdmin : handleChangePassword}
+        className="space-y-5"
+      >
+        <AuthField htmlFor="email" label="Email Address" icon={MailIcon}>
+          <AuthInput
+            id="email"
             type="email"
-            placeholder="Your email"
+            placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
             required
           />
-          <Input
-            type="password"
-            placeholder="Current password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            required
-          />
-          <Input
-            type="password"
-            placeholder="New password"
+        </AuthField>
+
+        {mode === "change_password" && (
+          <AuthField
+            htmlFor="currentPassword"
+            label="Current Password"
+            icon={KeyRoundIcon}
+          >
+            <AuthPasswordInput
+              id="currentPassword"
+              placeholder="Enter current password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              autoComplete="current-password"
+              required
+            />
+          </AuthField>
+        )}
+
+        <AuthField
+          htmlFor="newPassword"
+          label="New Password"
+          icon={LockKeyholeIcon}
+          hint="min 8 chars"
+        >
+          <AuthPasswordInput
+            id="newPassword"
+            placeholder={
+              mode === "init_admin"
+                ? "Create an administrator password"
+                : "Create a new password"
+            }
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
+            autoComplete="new-password"
             required
             minLength={8}
           />
-          <Input
-            type="password"
-            placeholder="Confirm new password"
+        </AuthField>
+
+        <AuthField
+          htmlFor="confirmPassword"
+          label="Confirm Password"
+          icon={LockKeyholeIcon}
+        >
+          <AuthPasswordInput
+            id="confirmPassword"
+            placeholder="Repeat password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            autoComplete="new-password"
             required
             minLength={8}
           />
-          {error && <p className="text-sm text-red-500">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Setting up…" : "Complete Setup"}
-          </Button>
-        </form>
-      </div>
-    </div>
+        </AuthField>
+
+        {error ? <AuthErrorBanner message={error} /> : null}
+
+        <Button
+          type="submit"
+          size="lg"
+          disabled={loading}
+          className="h-11 w-full rounded-md bg-primary/92 text-sm font-medium text-primary-foreground shadow-[0_16px_40px_rgba(33,211,173,0.18)] hover:bg-primary"
+        >
+          {loading ? panelCopy.loadingLabel : panelCopy.submitLabel}
+        </Button>
+      </form>
+    </AuthShell>
   );
 }
