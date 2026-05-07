@@ -233,6 +233,7 @@ export function AuthPasswordInput(
       />
       <button
         type="button"
+        disabled={restProps.disabled}
         className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-white/38 transition-colors hover:text-white/72"
         onClick={() => setVisible((state) => !state)}
         aria-label={visible ? "Hide password" : "Show password"}

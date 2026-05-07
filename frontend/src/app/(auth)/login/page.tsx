@@ -101,6 +101,7 @@ export default function LoginPage() {
   const [inviteCode, setInviteCode] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [enteringWorkspace, setEnteringWorkspace] = useState(false);
 
   const nextParam = searchParams.get("next");
   const redirectPath = validateNextParam(nextParam) ?? "/workspace";
@@ -131,6 +132,7 @@ export default function LoginPage() {
   }, [router]);
 
   const copy = AUTH_MODE_COPY[mode];
+  const isBusy = loading || enteringWorkspace;
 
   const highlights = useMemo(
     () => [
@@ -158,8 +160,12 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isBusy) {
+      return;
+    }
     setError("");
     setLoading(true);
+    let shouldReleaseLoading = true;
 
     try {
       const isLogin = mode === "login";
@@ -188,11 +194,16 @@ export default function LoginPage() {
         return;
       }
 
+      shouldReleaseLoading = false;
+      setEnteringWorkspace(true);
       router.push(redirectPath);
     } catch {
+      setEnteringWorkspace(false);
       setError("Network error. Please try again.");
     } finally {
-      setLoading(false);
+      if (shouldReleaseLoading) {
+        setLoading(false);
+      }
     }
   };
 
@@ -208,6 +219,7 @@ export default function LoginPage() {
         <div className="flex flex-col gap-4 border-t border-white/10 pt-5">
           <button
             type="button"
+            disabled={isBusy}
             className="group text-left text-sm text-white/52 transition-colors hover:text-white"
             onClick={() => {
               setMode((current) => (current === "login" ? "register" : "login"));
@@ -240,6 +252,7 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             autoComplete="email"
+            disabled={isBusy}
             required
           />
         </AuthField>
@@ -260,6 +273,7 @@ export default function LoginPage() {
                 : "Create a strong password"
             }
             autoComplete={mode === "login" ? "current-password" : "new-password"}
+            disabled={isBusy}
             required
             minLength={mode === "login" ? 6 : 8}
           />
@@ -279,6 +293,7 @@ export default function LoginPage() {
               onChange={(e) => setInviteCode(e.target.value)}
               placeholder="Enter invitation code"
               autoComplete="one-time-code"
+              disabled={isBusy}
               required
             />
           </AuthField>
@@ -289,10 +304,14 @@ export default function LoginPage() {
         <Button
           type="submit"
           size="lg"
-          disabled={loading}
+          disabled={isBusy}
           className="h-11 w-full rounded-md bg-primary/92 text-sm font-medium text-primary-foreground shadow-[0_16px_40px_rgba(33,211,173,0.18)] hover:bg-primary"
         >
-          {loading ? copy.loadingLabel : copy.submitLabel}
+          {enteringWorkspace
+            ? "Opening Workspace..."
+            : loading
+              ? copy.loadingLabel
+              : copy.submitLabel}
         </Button>
 
         <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-white/36">

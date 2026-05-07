@@ -37,6 +37,7 @@ export default function SetupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [enteringWorkspace, setEnteringWorkspace] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -109,9 +110,13 @@ export default function SetupPage() {
           submitLabel: "Complete Setup",
           loadingLabel: "Completing Setup...",
         };
+  const isBusy = loading || enteringWorkspace;
 
   const handleInitAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isBusy) {
+      return;
+    }
     setError("");
 
     if (newPassword !== confirmPassword) {
@@ -120,6 +125,7 @@ export default function SetupPage() {
     }
 
     setLoading(true);
+    let shouldReleaseLoading = true;
     try {
       const res = await fetch("/api/v1/auth/initialize", {
         method: "POST",
@@ -138,16 +144,24 @@ export default function SetupPage() {
         return;
       }
 
+      shouldReleaseLoading = false;
+      setEnteringWorkspace(true);
       router.push("/workspace");
     } catch {
+      setEnteringWorkspace(false);
       setError("Network error. Please try again.");
     } finally {
-      setLoading(false);
+      if (shouldReleaseLoading) {
+        setLoading(false);
+      }
     }
   };
 
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isBusy) {
+      return;
+    }
     setError("");
 
     if (newPassword !== confirmPassword) {
@@ -160,6 +174,7 @@ export default function SetupPage() {
     }
 
     setLoading(true);
+    let shouldReleaseLoading = true;
     try {
       const res = await fetch("/api/v1/auth/change-password", {
         method: "POST",
@@ -182,11 +197,16 @@ export default function SetupPage() {
         return;
       }
 
+      shouldReleaseLoading = false;
+      setEnteringWorkspace(true);
       router.push("/workspace");
     } catch {
+      setEnteringWorkspace(false);
       setError("Network error. Please try again.");
     } finally {
-      setLoading(false);
+      if (shouldReleaseLoading) {
+        setLoading(false);
+      }
     }
   };
 
@@ -227,6 +247,7 @@ export default function SetupPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
+            disabled={isBusy}
             required
           />
         </AuthField>
@@ -243,6 +264,7 @@ export default function SetupPage() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               autoComplete="current-password"
+              disabled={isBusy}
               required
             />
           </AuthField>
@@ -264,6 +286,7 @@ export default function SetupPage() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             autoComplete="new-password"
+            disabled={isBusy}
             required
             minLength={8}
           />
@@ -280,6 +303,7 @@ export default function SetupPage() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             autoComplete="new-password"
+            disabled={isBusy}
             required
             minLength={8}
           />
@@ -290,10 +314,14 @@ export default function SetupPage() {
         <Button
           type="submit"
           size="lg"
-          disabled={loading}
+          disabled={isBusy}
           className="h-11 w-full rounded-md bg-primary/92 text-sm font-medium text-primary-foreground shadow-[0_16px_40px_rgba(33,211,173,0.18)] hover:bg-primary"
         >
-          {loading ? panelCopy.loadingLabel : panelCopy.submitLabel}
+          {enteringWorkspace
+            ? "Opening Workspace..."
+            : loading
+              ? panelCopy.loadingLabel
+              : panelCopy.submitLabel}
         </Button>
       </form>
     </AuthShell>
