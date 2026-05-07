@@ -13,6 +13,7 @@ import {
 
 import { RecentChatList } from "./recent-chat-list";
 import { SettingsDialog, type SettingsSection } from "./settings";
+import { WorkspaceAccountMenu } from "./workspace-account-menu";
 import { WorkspaceHeader } from "./workspace-header";
 import { WorkspaceNavChatList } from "./workspace-nav-chat-list";
 import { WorkspaceNavMenu } from "./workspace-nav-menu";
@@ -53,6 +54,7 @@ export function WorkspaceSidebar({
           {isSidebarOpen && <RecentChatList />}
         </SidebarContent>
         <SidebarFooter className="border-t border-sidebar-border/70 px-2 py-2">
+          <WorkspaceAccountMenu onOpenSettings={openSettings} />
           <WorkspaceNavMenu onOpenSettings={openSettings} />
         </SidebarFooter>
         <SidebarRail />

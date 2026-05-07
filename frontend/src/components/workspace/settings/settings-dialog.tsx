@@ -1,6 +1,6 @@
 "use client";
 
-import { BrainIcon, PaletteIcon, UserIcon } from "lucide-react";
+import { BrainIcon, PaletteIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import {
@@ -37,11 +37,6 @@ export function SettingsDialog(props: SettingsDialogProps) {
   const sections = useMemo(
     () => [
       {
-        id: "account",
-        label: t.settings.sections.account,
-        icon: UserIcon,
-      },
-      {
         id: "appearance",
         label: t.settings.sections.appearance,
         icon: PaletteIcon,
@@ -52,11 +47,7 @@ export function SettingsDialog(props: SettingsDialogProps) {
         icon: BrainIcon,
       },
     ],
-    [
-      t.settings.sections.account,
-      t.settings.sections.appearance,
-      t.settings.sections.memory,
-    ],
+    [t.settings.sections.appearance, t.settings.sections.memory],
   );
   return (
     <Dialog
